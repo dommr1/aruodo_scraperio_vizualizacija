@@ -22,7 +22,6 @@ def clean_area(value):
     except:
         return np.nan
 
-
 #isskirciu pasalinimo funkcija
 def iqr_bounds(series):
     s = series.dropna()
@@ -35,11 +34,9 @@ def iqr_bounds(series):
     upper = Q3 + 1.5 * IQR
     return lower, upper
 
-
 def plot_scatter(group):
     #generuoja nuomos kv m kaina / pirkimo kv m kaina
-    print("Generating Chart 1: Rent vs Purchase Scatter Plot...")
-
+    print("Generating Chart 1")
     OFFSET_X = 0.02
     OFFSET_Y = 0.01
 
@@ -69,11 +66,9 @@ def plot_scatter(group):
     plt.tight_layout()
     plt.show()
 
-
 def plot_yield(group):
     #nuomos ir pirkimo kvadrato kainos santykio grafikas
-    print("Generating Chart 2: Top 10 Rental Yields...")
-
+    print("Generating Chart 2")
     top_yields = group.sort_values(by="rent_to_purchase_ratio", ascending=False).head(10)
 
     plt.figure(figsize=(10, 6))
@@ -85,10 +80,9 @@ def plot_yield(group):
     plt.tight_layout()
     plt.show()
 
-
 def plot_counts(group):
     #nuomos ir pardavimu skelbimu kiekis rajonuose
-    print("Generating Chart 3: Top 10 Listing Counts...")
+    print("Generating Chart 3")
 
     top_counts = group.sort_values(by="total_listings", ascending=False).head(10)
 
@@ -109,14 +103,12 @@ def plot_counts(group):
     plt.tight_layout()
     plt.show()
 
-
 LEGEND_POSITIONS = {
     'top left': 'upper left',
     'top right': 'upper right',
     'bottom left': 'lower left',
     'bottom right': 'lower right',
 }
-
 
 def plot_custom(data_frame, chart_type, x_column, y_column, legend_position):
     #vartotojo nustatytas grafikas
@@ -125,7 +117,7 @@ def plot_custom(data_frame, chart_type, x_column, y_column, legend_position):
 
     mpl_position = LEGEND_POSITIONS.get(legend_position.lower(), 'best')
 
-    print(f"Generating Custom Chart: {chart_type.capitalize()} of {y_column} vs {x_column}...")
+    print(f"Generating Custom Chart")
 
     if x_column.lower() == 'hood':
         x_data = data_frame.index
@@ -142,7 +134,7 @@ def plot_custom(data_frame, chart_type, x_column, y_column, legend_position):
         return
     y_data = data_frame[y_column]
 
-    fig, ax = plt.subplots(figsize=(12, 8))  # Increased size for better label visibility
+    fig, ax = plt.subplots(figsize=(12, 8))
 
     try:
         if chart_type.lower() == 'scatter':
@@ -186,7 +178,6 @@ def plot_custom(data_frame, chart_type, x_column, y_column, legend_position):
     except Exception as e:
         print(f"An error occurred during custom plotting: {e}")
 
-
 def get_custom_plot_params(data_frame):
     numerical_cols = list(data_frame.columns)
 
@@ -225,8 +216,6 @@ def get_custom_plot_params(data_frame):
     #jei scatter plot duodamas pasirinkimas x asiai
     if chart_type == 'scatter':
         x_column = select_column_by_number(numerical_cols, "X")
-
-
     y_column = select_column_by_number(numerical_cols, "Y")
 
     #legendos pozicija
@@ -235,7 +224,6 @@ def get_custom_plot_params(data_frame):
         print("\n    Legend Positions")
         for i, pos in enumerate(legend_options):
             print(f"  {i + 1}: {pos.title()}")
-
         try:
             pos_choice = int(input(f"Choose Legend Position number (1-{len(legend_options)}): "))
             if 1 <= pos_choice <= len(legend_options):
@@ -247,7 +235,6 @@ def get_custom_plot_params(data_frame):
             print("Invalid input. Please enter a number.")
 
     return chart_type, x_column, y_column, legend_position
-
 
 try:
     #duomenu nuskaitymas ir valymas
@@ -305,7 +292,6 @@ while True:
     print("4: Custom Chart")
     print("0: Exit")
     selection = input("Enter your selection (1, 2, 3, 4, or 0): ")
-
     if selection == '1':
         plot_scatter(group)
     elif selection == '2':
